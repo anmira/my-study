@@ -26,7 +26,9 @@
 						<!-- ${list}-> service.list() 가져온것, var는 ${list}를 list라는 이름으로 선언한것 -->
 							<tr>
 								<td><c:out value="${list.bno}" /></td>
-								<td><c:out value="${list.title}" /></td>
+								<td>
+									<a href="/board/readView?bno=${list.bno}"><c:out value="${list.title}" /></a>
+								</td>
 								<td><c:out value="${list.writer}" /></td>
 								<td><fmt:formatDate value="${list.regdate}" pattern="yyyy-MM-dd"/></td>
 							</tr>

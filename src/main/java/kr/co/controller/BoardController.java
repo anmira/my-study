@@ -28,7 +28,7 @@ public class BoardController {
 	}
 	
 	// 게시판 글 작성
-	@RequestMapping(value="/board/write", method = RequestMethod.POST)
+	@RequestMapping(value="/write", method = RequestMethod.POST)
 	public String write(BoardVO boardVO) throws Exception{
 		logger.info("write");
 		
@@ -38,7 +38,7 @@ public class BoardController {
 	}
 	
 	// 게시판 목록 조회
-	@RequestMapping(value="/board/list", method = RequestMethod.GET)
+	@RequestMapping(value="/list", method = RequestMethod.GET)
 	public String list(Model model) throws Exception{
 		logger.info("list");
 		
@@ -48,6 +48,14 @@ public class BoardController {
 		return "board/list";
 	}
 			
+	// 게시판 조회
+	@RequestMapping(value="/readView", method = RequestMethod.GET)
+	public String read(BoardVO boardVO, Model model) throws Exception{
+		logger.info("readView");
 		
+		model.addAttribute("read", service.read(boardVO.getBno()));
+						// read라는 이름으로 값(boardVO에 저장된 bno)을 저장
+		return "board/readView";
+	}
 	
 }
