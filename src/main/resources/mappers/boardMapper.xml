@@ -15,13 +15,31 @@
    							  , #{writer}  )
    </insert>
    
-   <select id="list" resultType="kr.co.vo.BoardVO">
+   <select id="listPage" resultType="kr.co.vo.BoardVO" parameterType="kr.co.vo.Criteria">
 		SELECT   BNO
 			   , TITLE
+			   , CONTENT
 			   , WRITER
 			   , REGDATE
-		  FROM TEST_BOARD
+		  FROM (
+		  		SELECT BNO
+		  			 , TITLE
+		  			 , CONTENT
+		  			 , WRITER
+		  			 , REGDATE
+		  			 , ROW_NUMBER() OVER(ORDER BY BNO DESC) AS RNUM
+		  		FROM TEST_BOARD
+		  						)TEST
+		  WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
 		  ORDER BY BNO DESC
+	</select>
+	
+	<select id="listCount" resultType="int">
+	<![CDATA[
+		SELECT COUNT(BNO)
+		 FROM TEST_BOARD
+		WHERE BNO > 0
+	]]>
 	</select>
 	
 	<select id="read" parameterType="int" resultType="kr.co.vo.BoardVO">
@@ -33,5 +51,18 @@
 		  FROM TEST_BOARD
 		  WHERE BNO = #{bno}
 	</select>
+	
+	<update id="update" parameterType="kr.co.vo.BoardVO">
+		UPDATE TEST_BOARD
+			SET TITLE	=	#{title},
+				CONTENT	  =	  #{content}
+		WHERE BNO = #{bno}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE
+			FROM TEST_BOARD
+			WHERE BNO = #{bno} 
+	</delete>
 	
 </mapper>
