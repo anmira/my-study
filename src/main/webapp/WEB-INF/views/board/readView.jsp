@@ -29,6 +29,20 @@
 				}
 			})
 			
+			// 목록
+			$(".list_btn").on("click", function(){
+				location.href = "/board/list?page=${scri.page}"
+							  +"&perPageNum=${scri.perPageNum}"
+							  +"&searchType=${scri.searchType}&keyword=${scri.keyword}";
+			})
+			
+			// 작성 버튼 눌렀을때 값들이 replyWrite로 전달
+			$(".replyWriteBtn").on("click", function(){
+				var formObj = $("form[name='replyForm']");
+				formObj.attr("action", "/board/replyWrite");
+				formObj.submit();
+			});
+			
 			// 취소
 			$(".list_btn").on("click", function(){
 				
@@ -53,6 +67,10 @@
 			<section id="container">
 				<form name="readForm" role="form" method="post">
 					<input type="hidden" id="bno" name="bno" value="${read.bno}" />
+					<input type="hidden" id="page" name="page" value="${scri.page}" />
+					<input type="hidden" id="perPageNum" name="perPageNum" value="${scri.perPageNum}" />
+					<input type="hidden" id="searchType" name="searchType" value="${scri.searchType}" />
+					<input type="hidden" id="keyword" name="keyword" value="${scri.keyword}" />
 				</form>
 					<table>
 						<tbody>
@@ -84,6 +102,38 @@
 					<button type="submit" class="delete_btn">삭제</button>
 					<button type="submit" class="list_btn">목록</button>	
 				</div>
+				
+				<!-- 댓글 -->
+				<div id="reply">
+					<ol class="replyList">
+						<c:forEach items="${replyList}" var="replyList">
+							<li>
+								<p>
+								작성자 : ${replyList.writer}<br />
+								작성날짜: <fmt:formatDate value="${replyList.regdate}" pattern="yyyy-mm-dd" />
+								</p>
+								<p>${replyList.content}</p>
+							</li>
+						</c:forEach>
+					</ol>
+				</div>
+				
+				<form name="replyForm" method="post">
+					<input type="hidden" id="bno" name="bno" value="${read.bno}" />
+					<input type="hidden" id="page" name="page" value="${scri.page}" />
+					<input type="hidden" id="perPageNum" name="perPageNum" value="${scri.perPageNum}" />
+					<input type="hidden" id="searchType" name="searchType" value="${scri.searchType}" />
+					<input type="hidden" id="keyword" name="keyword" value="${scri.keyword}" />
+					
+					<div>
+						<label for="writer">댓글 작성자</label><input type="text" id="writer" name="writer" />
+						<br/>
+						<label for="content">댓글 내용</label><input type="text" id="content" name="content" />
+					</div>
+					<div>
+						<button type="button" class="replyWriteBtn">작성</button>
+					</div>
+				</form>
 			</section>
 			<hr />
 		</div>

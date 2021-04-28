@@ -12,7 +12,11 @@
 			
 			$(".cancel_btn").on("click", function(){
 				event.preventDefault(); <%-- <a>,<submit>,<button> 태그는 각각 페이지 이동이나 form 데이터 전송 등의 기본 이벤트들이 있는데 preventDefault() 메서드를 통해 해당 이벤트 발생을 막음 --%>
-				location.href = "/board/list";
+				location.href = "/board/readView?bno=${update.bno}"
+					 + "&page=${scri.page}"
+					 + "&perPageNum=${scri.perPageNum}"
+					 + "&searchType=${scri.searchType}"
+					 + "&keyword=${scri.keyword}";
 			})
 			
 			$(".update_btn").on("click", function(){
