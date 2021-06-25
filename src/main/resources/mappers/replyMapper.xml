@@ -41,7 +41,7 @@
 	</delete>
 	
 <!-- 선택된 댓글 조회 -->
-	<select id="selectReply" parameterType="kr.co.vo.ReplyVO">
+	<select id="selectReply" resultType="kr.co.vo.ReplyVO">
 		SELECT
 				BNO
 			,	RNO
@@ -49,7 +49,7 @@
 			,	WRITER
 			,	REGDATE
 		FROM MP_REPLY
-		WHERE RN = #{rno}
+		WHERE RNO = #{rno}
 	</select>
 		
 </mapper>
